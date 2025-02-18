@@ -1,0 +1,5 @@
+.vscode/
+.bsp/
+.metal/
+out/
+target/
