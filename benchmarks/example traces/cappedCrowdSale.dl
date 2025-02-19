@@ -1,0 +1,34 @@
+//cappedCrowdSale
+
+// 定义跟踪的声明  
+.decl exampleTrace(t: uint, name: symbol, sender: address, value: uint)  
+
+
+// Trace 1  
+exampleTrace(1, "invest", 0x114514, 100).  
+exampleTrace(2, "invest", 0x114515, 10000).  
+exampleTrace(3, "close_success", 0, 0).  
+exampleTrace(4, "withdraw", 0, 0).  
+
+// Trace 2  
+exampleTrace(1, "invest", 0x114514, 100).  
+exampleTrace(2, "invest", 0x114515, 10000).  
+exampleTrace(3, "close_success", 0, 0).  
+exampleTrace(4, "withdraw", 0, 0).  
+
+// Trace 3  
+exampleTrace(1, "invest", 0x114514, 100).  
+exampleTrace(2, "invest", 0x114515, 10000).  
+exampleTrace(3, "close_success", 0, 0).  
+exampleTrace(4, "withdraw", 0, 0).  
+
+// Trace 4  
+exampleTrace(1, "invest", 0x114514, 100).  
+exampleTrace(2, "invest", 0x114515, 100).  
+exampleTrace(3, "close_refund", 0, 0).  
+exampleTrace(4, "claimrefund", 0x114514, 0).  
+
+// Trace 5  
+exampleTrace(1, "invest", 0x114514, 100).  
+exampleTrace(2, "invest", 0x114515, 10000).  
+exampleTrace(3, "close_success", 0, 0).  

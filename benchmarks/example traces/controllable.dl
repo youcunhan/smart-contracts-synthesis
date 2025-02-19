@@ -1,0 +1,18 @@
+//controllable
+
+// 定义跟踪的声明  
+.decl exampleTrace(t: uint, name: symbol, sender: address, to: address, value: uint)  
+
+
+// 添加示例交易序列事实 - Trace 1  
+exampleTrace(1, "transfer", 0x114514, 0x114515, 20).  
+exampleTrace(2, "burn", 0x114514, 0, 10).  
+exampleTrace(5, "approve", 0x114514, 0x114518, 10).  
+exampleTrace(6, "transferFrom", 0x114514, 0x114515, 10).  
+
+// 添加示例交易序列事实 - Trace 2（与 Trace 1 相同?）  
+exampleTrace(1, "transfer", 0x114514, 0x114515, 20).  
+exampleTrace(2, "burn", 0x114514, 0, 10).  
+exampleTrace(5, "approve", 0x114514, 0x114518, 10).  
+exampleTrace(6, "transferFrom", 0x114514, 0x114515, 10).  
+

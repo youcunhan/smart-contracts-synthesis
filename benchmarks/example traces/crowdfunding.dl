@@ -1,0 +1,41 @@
+//crowdfunding
+// 定义跟踪的声明  
+.decl exampleTrace(t: uint, name: symbol, sender: address, value: uint)  
+
+
+// Trace 1: 多次投资  
+exampleTrace(1, "invest", 0x114514, 100).  
+exampleTrace(2, "invest", 0x114515, 100).  
+exampleTrace(3, "invest", 0x114516, 100).  
+exampleTrace(12224, "invest", 0x114517, 100).  
+exampleTrace(22225, "invest", 0x114518, 100).  
+exampleTrace(33336, "invest", 0x114519, 100).  
+
+// Trace 2: 成功募资并提款  
+exampleTrace(1, "invest", 0x114514, 100).  
+exampleTrace(2, "invest", 0x114515, 10000).  
+exampleTrace(3, "close_success", 0, 0).  
+exampleTrace(4, "withdraw", 0, 0).  
+
+// Trace 3: 延迟成功募资并提款  
+exampleTrace(1, "invest", 0x114514, 100).  
+exampleTrace(2, "invest", 0x114515, 10000).  
+exampleTrace(11200, "close_success", 0, 0).  
+exampleTrace(11234, "withdraw", 0, 0).  
+
+// Trace 4: 达到指定时间并成功关闭  
+exampleTrace(1, "invest", 0x114514, 100).  
+exampleTrace(2, "invest", 0x114515, 10000).  
+exampleTrace(999878, "close_success", 0, 0).  
+exampleTrace(999879, "withdraw", 0, 0).  
+
+// Trace 5: 退款场景  
+exampleTrace(1, "invest", 0x114514, 100).  
+exampleTrace(2, "invest", 0x114515, 100).  
+exampleTrace(999878, "close_refund", 0, 0).  
+exampleTrace(999879, "claimrefund", 0x114514, 0).  
+
+// Trace 6: 成功募资但不提款  
+exampleTrace(1, "invest", 0x114514, 100).  
+exampleTrace(2, "invest", 0x114515, 10000).  
+exampleTrace(3, "close_success", 0, 0)
