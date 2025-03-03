@@ -38,50 +38,55 @@ object BoundedModelChecking {
 
       val res = solver.check(p)
       if (res == Status.SATISFIABLE) {
-        return Some(extractModel(solver.getModel))
+        print("aaa")
+        // return Some(extractModel(solver.getModel))
       }
       solver.add(currentTrans)
 
-      val ys = currentXs.map(x => fresh(count, ctx, pureName(x.toString), x.getSort))
-      val nfvs = currentFvs.map(f => fresh(count, ctx, pureName(f.toString), f.getSort))
+      val ys = currentXs.map(x => println(x.getSort))
+      println(ctx.getBoolSort)
+      // val ys = currentXs.map(x => fresh(count, ctx, pureName(x.toString), x.getSort()))
+    //   val nfvs = currentFvs.map(f => fresh(count, ctx, pureName(f.toString), f.getSort))
 
-      currentTrans = currentTrans.substitute(
-        zipp(currentXns ++ currentXs ++ currentFvs, ys ++ currentXns ++ nfvs): _*
-      ).asInstanceOf[BoolExpr]
+    //   currentTrans = currentTrans.substitute(
+    //     zipp(currentXns ++ currentXs ++ currentFvs, ys ++ currentXns ++ nfvs): _*
+    //   ).asInstanceOf[BoolExpr]
       
-      currentGoal = currentGoal.substitute(zipp(currentXs, currentXns): _*).asInstanceOf[BoolExpr]
+    //   currentGoal = currentGoal.substitute(zipp(currentXs, currentXns): _*).asInstanceOf[BoolExpr]
       
-      currentXs = currentXns
-      currentXns = ys
-      currentFvs = nfvs
+    //   currentXs = currentXns
+    //   currentXns = ys
+    //   currentFvs = nfvs
     }
     None
   }
 
-  def extractModel(model: com.microsoft.z3.Model): Map[String, Expr[_]] = {
-    var extractedModel = Map[String, Expr[_]]()
-    val iter = model.getConstDecls.iterator
+  // def extractModel(model: com.microsoft.z3.Model): Map[String, Expr[_]] = {
+  //   var extractedModel = Map[String, Expr[_]]()
+  //   val iter = model.getConstDecls.iterator
     
-    while (iter.hasNext) {
-      val decl = iter.next()
-      val name = decl.getName.toString
-      val value = model.getConstInterp(decl)
-      extractedModel += (pureName(name) -> value)
-    }
-    extractedModel
-  }
+  //   while (iter.hasNext) {
+  //     val decl = iter.next()
+  //     val name = decl.getName.toString
+  //     val value = model.getConstInterp(decl)
+  //     extractedModel += (pureName(name) -> value)
+  //   }
+  //   extractedModel
+  // }
 
   def testbmc(): Unit = {
     val ctx = new Context()
-    val bvSize = 8
+    val bvSize = 4
     val bvSort = ctx.mkBitVecSort(bvSize)
     val x = ctx.mkBVConst("x", bvSize)
-    val xn = ctx.mkBVConst("x'", bvSize)
+    val x1 = ctx.mkBVConst("x'", bvSize)
     val init = ctx.mkEq(x, ctx.mkBV(0, bvSize))
-    val trans = ctx.mkEq(xn, ctx.mkBVAdd(x, ctx.mkBV(1, bvSize)))
-    val goal = ctx.mkEq(x, ctx.mkBV(5, bvSize))
+    val trans = ctx.mkEq(x1, ctx.mkBVAdd(x, ctx.mkBV(3, bvSize)))
+    val goal = ctx.mkEq(x, ctx.mkBV(10, bvSize))
     
-    val result = bmc(ctx, init, trans, goal, Array(), Array(x), Array(xn))
+    val result = bmc(ctx, init, trans, goal, Array(), Array(x), Array(x1))
     println(result.getOrElse("No model found"))
+    // println(x.getSort)
+    ctx.close()
   }
 }
