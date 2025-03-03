@@ -3,7 +3,7 @@ package synthesis
 import com.microsoft.z3._
 import verification.TransitionSystem
 
-class SmartContractStateMachine(name: String, ctx: Context) {
+class StateMachine(name: String, ctx: Context) {
   val states: scala.collection.mutable.Map[String, (Expr[_], Expr[_])] = scala.collection.mutable.Map()
   val prevStates: scala.collection.mutable.Map[String, (Expr[_], Expr[_])] = scala.collection.mutable.Map()
   val once: scala.collection.mutable.Map[String, (Expr[_], Expr[_])] = scala.collection.mutable.Map()
@@ -302,6 +302,23 @@ class SmartContractStateMachine(name: String, ctx: Context) {
         neg :+= simulate(negtrace, candidate_guard)
       }
     }
+  }
+
+
+  def readFromProgram(p: Program): List[List[List[Expr[BoolSort]]]] = {
+    var res: List[List[List[Expr[BoolSort]]]] = List()
+    p.rules.foreach { rule =>
+      var trace: List[List[Expr[BoolSort]]] = List()
+      rule.body.foreach { body =>
+        var tr: List[Expr[BoolSort]] = List()
+        body.foreach { b =>
+          tr = tr :+ ctx.mkBoolConst(b)
+        }
+        trace = trace :+ tr
+      }
+      res = res :+ trace
+    }
+    res
   }
          
 }
