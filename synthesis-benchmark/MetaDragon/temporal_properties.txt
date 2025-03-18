@@ -4,7 +4,6 @@
 
 □(transferFrom(from, contract, tokenId) ∧ isValidTokenId(tokenId) → ¬ownerOf(tokenId))
 
-//兑换 ERC20 时，获取的代币数量应按损耗率计算
 □(transferFrom(from, contract, tokenId) → balanceOf(from, b) ∧ b' = b + ((TRANSFORM_PRICE * (10000 - TRANSFORM_LOSE_RATE)) / 10000))
 
 □(mintNFT(p) → msg.value ≥ MINT_PRICE ∧ msg.value % MINT_PRICE = 0)

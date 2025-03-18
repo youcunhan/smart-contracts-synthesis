@@ -8,5 +8,4 @@
 
 □(stakeNFT(p, tokenId) → totalSupply(n) < maxNftAmount)
 
-//质押和撤销 NFT 必须是同一个人操作
 □(stakeNFT(p, tokenId) → ownerOf(tokenId) = p) ∧ (unstakeNFT(p, tokenId) → ownerOf(tokenId) = contract)
