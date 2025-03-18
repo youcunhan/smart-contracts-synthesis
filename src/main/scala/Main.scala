@@ -251,6 +251,10 @@ object Main extends App {
     BoundedModelChecking.testbmc()
   }
 
+  else if (args(0) == "testbmc2") {
+    BoundedModelChecking.testbmc2()
+  }
+
   else {
     println(s"Unrecognized command: ${args(0)}")
   }

@@ -4,13 +4,13 @@ import datalog.Program
 import verification.{TransitionSystem, Verifier}
 import synthesis.StateMachine
 
-case class Synthesizer(dl: Program, example_traces: Set[ExampleTrace],
-                       temporalProperties: Set[TemporalProperty]) {
+case class Synthesizer() {
 
-  def go(): Program = {
-    temporalProperties
-    /** Translate dl into a transition system. */
-    val statemachine: StateMachine = StateMachine()
+  def synthesize(name: String): Program = {
+    val temporalProperties: TemporalProperty = TemporalProperty()
+    val filepath = "./synthesis-benchmark/" + name + "/" + name + ".dl"
+
+    val dl = parseProgram(filepath)
     stateMachine.readFromProgram(dl)
     /** The CEGIS loop.  */
     stateMachine.cegis()

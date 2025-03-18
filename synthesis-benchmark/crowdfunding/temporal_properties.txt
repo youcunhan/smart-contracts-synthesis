@@ -1,0 +1,11 @@
+// Ensuring total balance matches raised funds before closure
+□(totalBalance(n) ∧ raised(r) ∧ closed(b) ∧ b==false → n == r)
+
+// Ensuring withdraw happens only once
+□(onceWithdraw(true) → ¬♦(withdraw(_, _)))
+
+// Ensuring refund and withdraw do not happen together
+□(¬(onceWithdraw(true) ∧ onceRefund(true)))
+
+// Ensuring refund happens only when raised < target
+□(onceRefund(true) → raised(r) ∧ target(t) → r < t)

@@ -1,0 +1,8 @@
+recv_stake(0x123, 100, 30)@0;
+recv_stake(0x456, 200, 60)@1;
+recv_unstake(0x123, 0)@30;
+
+recv_withdraw(0x123, 50, 10, true)@10;
+recv_withdraw(0x456, 100, 20, false)@20;
+
+recv_withdraw(0x789, 500, 50, true)@5;

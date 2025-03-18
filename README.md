@@ -5,49 +5,11 @@ into Solidity programs.
 
 # Install dependencies
 
-Build tool: [SBT](https://www.scala-sbt.org/1.x/docs/Setup.html)
+Build tool:
+1. [SBT](https://www.scala-sbt.org/1.x/docs/Setup.html)
+2. [Truffle](https://trufflesuite.com/docs/truffle/getting-started/installation/): ``npm install -g truffle``
 
-# Compile single smart contract
-
-```
-sbt "run compile benchmarks/[contract_name].dl"
-```
-The complete list of benchmark smart contracts are in [here](benchmarks/).
-
-Other options: 
-```compile [--arg n] file-path
---fuse                   consolidate updates into one function
---materialize <filename> materialize the set of relations specified in file
---out <directory>        output directory
-```
-
-The view materialization file is organized as a csv file,
-where the names of the materialized relations are separated by comma.
-See an [example](view-materialization/Wallet.csv).
-Other examples are located in [view-materialization](view-materialization/).
-
-# Run
-
-1. Generate Solidity programs: ``sbt "run test"``
-2. Generate Solidity programs with instrumentations for run-time verification: ``sbt "run test-instrument"``
-
-The generated programs are located at ``solidity/dsc`` and ``solidity/dsc-instrument``.
-
-# Run in Docker
-Alternatively, one could run it in docker.
-
-First install Docker from [here](https://docs.docker.com/engine/install/).
-
-1. Pull the docker image: ``docker pull hxchen/fse22-artifact``
-2. Generate Solidity programs: `` docker run hxchen/fse22-artifact  sh -c "sbt 'run test'; cat solidity/dsc/*.sol"``
-3. Generate Solidity programs with instrumentations for run-time verification: `` docker run hxchen/fse22-artifact  sh -c "sbt 'run test-instrument'; cat solidity/dsc-instrument/*.sol"``
-
-
-# Example contracts
-
-Examples of declarative smart contrats are located in [benchmarks](benchmarks/).
-
-# Verification
+# Verification and bounded model checking
 
 ## Setup Z3 
 
@@ -70,6 +32,23 @@ Examples of declarative smart contrats are located in [benchmarks](benchmarks/).
     ```
 5. In sbt configuration, set working directory as the project directory, so that Java runtime can locate the two dylib file.
 
+# Synthesize single smart contract
+
+```
+sbt "run synthesize [contract_name]"
+```
+The complete list of benchmark smart contracts are in [here](synthesis-benchmark/).
+Each one contains three parts: datalog file, example traces and properties.
+
+# Run
+
+1. Synthesize all Solidity programs: ``sbt "run synthesis"``
 
 
-sbt "run compile --out out/ benchmarks/bnb.dl"
+# Example contracts
+
+Examples of declarative smart contrats are located in [benchmarks](synthesis-benchmark/).
+
+# Gas consumption
+
+The contracts used for gas measurements, the script and instructions can be found [here](truffle/).

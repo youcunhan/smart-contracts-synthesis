@@ -1,9 +1,0 @@
-//erc20
-// 定义跟踪的声明  
-.decl exampleTrace(t: uint, name: symbol, sender: address, to: address, value: uint)  
-
-// Trace 1  
-exampleTrace(1, "transfer", 0x114514, 0x114515, 20).  
-exampleTrace(2, "burn", 0x114514, 0, 10).  
-exampleTrace(5, "approve", 0x114514, 0x114518, 10).  
-exampleTrace(6, "transferFrom", 0x114514, 0x114515, 10). 
