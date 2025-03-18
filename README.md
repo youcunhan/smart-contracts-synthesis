@@ -1,7 +1,6 @@
-# Declarative smart contracts
+# Artifacts for ICSE'26
 
-A compiler that translates Declarative smart contracts
-into Solidity programs.
+Synthesizing Smart Contracts via Multi-Modal Specifications
 
 # Install dependencies
 

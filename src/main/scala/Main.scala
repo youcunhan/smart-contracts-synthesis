@@ -4,6 +4,7 @@ import util.Misc
 import verification.{Prove, TransitionSystem, Verifier}
 import synthesis.BoundedModelChecking
 import util.Misc.{createDirectory, fileToString, isFileExists, parseProgram, readMaterializedRelationNames}
+import synthesis.Synthesizer
 
 import java.nio.file.Paths
 import scala.sys.exit
@@ -34,6 +35,40 @@ object Main extends App {
     "voting.dl",
     "brickBlockToken.dl",
     "auction.dl"
+    )
+    val allsynthesisBenchmarks = List(
+    "APEDAO",
+    "auction",
+    "bnb",
+    "BNO",
+    "cappedCrowdSale",
+    "controllable",
+    "crowdfunding",
+    "DAppSocial",
+    "erc20",
+    "erc1155",
+    "finalizablecrowdsale",
+    "GPU",
+    "HedgeyFinance",
+    "jokintheboxstaking",
+    "Juice",
+    "mana",
+    "melon",
+    "MetaDragon",
+    "mrv",
+    "paymentsplitter",
+    "sheepfarm",
+    "shib",
+    "sss",
+    "tether",
+    "tokenpartition",
+    "vestingwallet",
+    "vote",
+    "wallet",
+    "wifcoin",
+    "Yield",
+    "zebi",
+    "Zilliq"
     )
 
     val invariantGenerationBenchmarks = List(
@@ -253,6 +288,9 @@ object Main extends App {
 
   else if (args(0) == "testbmc2") {
     BoundedModelChecking.testbmc2()
+  }
+  else if (args(0) == "synthesis") {
+    allsynthesisBenchmarks.foreach{name => Synthesizer.synthesize(name)}
   }
 
   else {

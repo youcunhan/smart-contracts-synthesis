@@ -1,0 +1,16 @@
+// 不能无授权执行 transferFrom
+□(transferFrom(from, to, spender, value) → allowance(from, spender, a) ∧ a ≥ value)
+
+// 余额不能为负
+□(transfer(from, to, value) → balanceOf(from, b) ∧ b ≥ value)
+
+// burn 不能超出余额
+□(burn(p, amount) → balanceOf(p, b) ∧ b ≥ amount)
+
+// swapAndLiquify 不能导致合约余额不足
+□(swapAndLiquify(tokenAmount) → balanceOf(contract, c) ∧ c ≥ tokenAmount)
+
+// 交易税（销毁部分代币）必须符合合约逻辑
+□(transfer(from, to, value) → 
+    (_isPairs(from) → balanceOf(_destroyAddress, d) ∧ d' = d + value * 2 / 100) ∧
+    (_isPairs(to) → balanceOf(_destroyAddress, d) ∧ d' = d + value / 200))

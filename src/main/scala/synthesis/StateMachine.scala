@@ -2,6 +2,7 @@ package synthesis
 
 import com.microsoft.z3._
 import verification.TransitionSystem
+import BoundedModelChecking.BoundedModelChecking
 
 class StateMachine(name: String, ctx: Context) {
   val states: scala.collection.mutable.Map[String, (Expr[_], Expr[_])] = scala.collection.mutable.Map()
@@ -156,8 +157,8 @@ class StateMachine(name: String, ctx: Context) {
   }
 
   def bmc(property: Expr[BoolSort]): Option[List[List[Expr[BoolSort]]]] = {
-    import lib.bmc._
-    lib.bmc.index = 0
+
+    BoundedModelChecking.index = 0
     ts.setTr(z3.Bool(false), Set())
 
     transitions.foreach { tr =>
@@ -167,7 +168,7 @@ class StateMachine(name: String, ctx: Context) {
     val xs = states.values.map(_._1) ++ states.values.map(_._2) ++ List(nowOut)
     val xns = states.values.map(_._2) ++ List(nowOut)
 
-    val model = bmc(ts.getInit(), ts.getTr(), property, xs, xns)
+    val model = BoundedModelChecking.bmc(ts.getInit(), ts.getTr(), property, xs, xns)
     model match {
       case Some(m) =>
         val trace = (1 until m.size - 2).map { i =>

@@ -2,10 +2,10 @@
 □(totalBalance(n) ∧ raised(r) ∧ closed(b) ∧ b==false → n == r)
 
 // Ensuring withdraw happens only once
-□(onceWithdraw(true) → ¬♦(withdraw(_, _)))
+□(♦Withdraw() → ¬♦(withdraw()))
 
 // Ensuring refund and withdraw do not happen together
-□(¬(onceWithdraw(true) ∧ onceRefund(true)))
+□(¬(♦Withdraw() ∧ ♦Refund()))
 
 // Ensuring refund happens only when raised < target
-□(onceRefund(true) → raised(r) ∧ target(t) → r < t)
+□(♦Refund() → raised(r) ∧ target(t) → r < t)
